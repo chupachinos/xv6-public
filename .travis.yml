@@ -1,0 +1,14 @@
+language: c
+script: make && make fs.img
+deploy:
+  provider: releases
+  api_key:
+    secure: i5uLToFGPcJbTPt/k63OcAn23rnNWbVCoCYF3KlZB84z6ALeJST7WvWFfZh9ObFgQzfltHEQjm3JWSTTHQN2gyyqVxhOQ2BCJd20+Z0VhIYGf+k7U4ZVEJqQ7/lv5Cnt05LSGZHTPxQHSLnTJ+iFuU/QdeezGz0fZqG3r1F0wtyGyFlBz5V0296+qzXFvSJ288PKlH1MjzmpA/Eov8chrA+qZ2YmhS3WdlMUfKzmlJc5q+lobq+QTZwSFxvebnZtwqr2e9iFcQ8JidHG1GGKLPcra+5MItOoCdXRA3YoOX6NxFylZHWbnktG7GsIteUzpsCD5IjPD9Rc5vY9CdXMxNwKyfN3xoV8ZlXjkoydVqXPX6CBUw6AOGvf210ZQ3g1+tttVHn3ZQGXBWflU5tj2EQnErjfoGiajY4K8m5Kv/l311A7w3DcP4eDuZfr5LYalFDPRJWuVyZR1iL6YB2WlVFY+uZwVYAbhVzkwHiitOm1cLhDjilOkHkiARvJ73SY27wB7uZQRJsp3/tX5qn6Qpv4vmpL1tTCO1t8nZAKa56yHBYeLdemZsIuwiZGRV8ZXGnhEpqdgvQwBXZvIrTx9pIOqztaZS7nzQAhF4J+XjSXSCkvD5q54d1QyQ+CNNk0SIwpN0GRl9AIzkgboqRfyyy733Y9vg20K1Bc3j2rITE=
+  file:
+    - fs.img
+    - xv6.img
+  skip_cleanup: true
+  on:
+    repo: chupachinos/xv6-public
+    branch: project_1
+    tags: true
