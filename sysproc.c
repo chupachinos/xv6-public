@@ -6,8 +6,10 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+#include "spinlock.h"
 
 struct {
+    struct spinlock lock;
     struct proc proc[NPROC];
 } ptable;
 
@@ -103,8 +105,8 @@ sys_getprocs(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         if((p->state != UNUSED)&&(p->state == ZOMBIE))
             count = count + 1;
-    return count;
     }
+    return count;
     release(&ptable.lock);
 }
 
