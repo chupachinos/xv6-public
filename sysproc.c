@@ -92,11 +92,14 @@ sys_uptime(void)
 int
 sys_getprocs(void)
 {
+    acquire(&ptable.lock);
     struct proc *p;
     int count = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         if((p->state != UNUSED)&&(p->state == ZOMBIE))
             count = count + 1;
     return count;
+    }
+    release(&ptable.lock);
 }
 
