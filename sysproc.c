@@ -7,6 +7,11 @@
 #include "mmu.h"
 #include "proc.h"
 
+struct {
+    struct spinlock lock;
+    struct proc proc[NPROC];
+} ptable;
+
 int
 sys_fork(void)
 {
@@ -89,6 +94,7 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
 int
 sys_getprocs(void)
 {
