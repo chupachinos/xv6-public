@@ -8,4 +8,5 @@
 
 int main(){
     print("El numero de procesos corriendo en el sistema es de: %d\n", getprocs());
+    exit();
 }
