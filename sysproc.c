@@ -8,7 +8,6 @@
 #include "proc.h"
 
 struct {
-    struct spinlock lock;
     struct proc proc[NPROC];
 } ptable;
 
