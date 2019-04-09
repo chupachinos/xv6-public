@@ -106,7 +106,7 @@ sys_getprocs(void)
         if((p->state != UNUSED)&&(p->state == ZOMBIE))
             count = count + 1;
     }
-    return count;
     release(&ptable.lock);
+    return count;
 }
 
