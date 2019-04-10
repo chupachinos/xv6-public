@@ -103,7 +103,7 @@ sys_getprocs(void)
     struct proc *p;
     int count = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-        if((p->state != UNUSED)&&(p->state == ZOMBIE))
+        if((p->state != UNUSED)||(p->state == ZOMBIE))
             count = count + 1;
     }
     release(&ptable.lock);
