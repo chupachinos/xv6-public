@@ -88,6 +88,7 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p->tickets = 100;
 
   release(&ptable.lock);
 
@@ -323,32 +324,41 @@ void
 scheduler(void)
 {
   struct proc *p;
-  struct cpu *c = mycpu();
   c->proc = 0;
+    int counter = 0;
   
   for(;;){
     // Enable interrupts on this processor.
     sti();
-
-    // Loop over process table looking for process to run.
     acquire(&ptable.lock);
+    int number_tickets = 0;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+        if(p->state == RUNNABLE)
+            number_tickets+=p->tickets;
+    }
+    int winner = rand()%(number_tickets);
+    // Loop over process table looking for process to run.
+   
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
+        if((counter + p->tickets)<winner){
+            counter += p->tickets;
+            continue;
+        }
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
-      c->proc = p;
+      proc = p;
       switchuvm(p);
       p->state = RUNNING;
-
       swtch(&(c->scheduler), p->context);
       switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
-      c->proc = 0;
+      proc = 0;
     }
     release(&ptable.lock);
 
