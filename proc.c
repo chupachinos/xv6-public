@@ -6,7 +6,8 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-#include "random"
+#include <stdio.h>
+#include <stdlib.h>
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
