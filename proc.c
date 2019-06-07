@@ -6,7 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-
+#include "random"
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -58,6 +58,7 @@ struct proc*
 myproc(void) {
   struct cpu *c;
   struct proc *p;
+  int tickets;
   pushcli();
   c = mycpu();
   p = c->proc;
@@ -324,7 +325,7 @@ void
 scheduler(void)
 {
   struct proc *p;
-  c->proc = 0;
+  proc = 0;
     int counter = 0;
   
   for(;;){
