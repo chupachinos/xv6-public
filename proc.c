@@ -343,9 +343,9 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-        if((counter + p->tickets ) < winner){
-            counter+= p->tickets;
-            continue;
+      if((counter + p->tickets ) < winner){
+        counter+= p->tickets;
+        continue;
             }
         }
       
