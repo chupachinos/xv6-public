@@ -6,8 +6,8 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "stdlib.h"
+
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -59,7 +59,6 @@ struct proc*
 myproc(void) {
   struct cpu *c;
   struct proc *p;
-  int tickets;
   pushcli();
   c = mycpu();
   p = c->proc;
@@ -326,41 +325,44 @@ void
 scheduler(void)
 {
   struct proc *p;
-  proc = 0;
-    int counter = 0;
-  
+  struct cpu *c = mycpu();
+  c->proc = 0;
+  process* proccesses = tickets;
+  process* current = proccesses;
+  int number_tickets = 100;
+  int counter = 0;
+  srand(time(null));
   for(;;){
     // Enable interrupts on this processor.
     sti();
     acquire(&ptable.lock);
-    int number_tickets = 0;
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-        if(p->state == RUNNABLE)
-            number_tickets+=p->tickets;
-    }
     int winner = rand()%(number_tickets);
+    while (current != NULL){
+        counter+=current->tickets;
+        if (counter > winner){break;}
+        current = current -> next;
+        
+    }
+      
     // Loop over process table looking for process to run.
-   
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-        if((counter + p->tickets)<winner){
-            counter += p->tickets;
-            continue;
         }
 
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
-      proc = p;
+      c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
+
       swtch(&(c->scheduler), p->context);
       switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
-      proc = 0;
+      c->proc = 0;
     }
     release(&ptable.lock);
 
