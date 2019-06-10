@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "rand.h"
 
 struct {
   struct spinlock lock;
@@ -311,10 +312,10 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-static long
-lcg_rand(long a)
+static unsigned long
+lcg_rand(unsigned long a)
 {
-    long long b = 279470273, c = 4294967291;
+    unsigned long b = 279470273, c = 4294967291;
     return (a * b) % c;
 }
 int n_tickets(void){
@@ -335,7 +336,7 @@ scheduler(void)
   struct cpu *c = mycpu();
   c->proc = 0;
   int number_tickets, runval = 0;
-  int winner;
+  long winner;
   for(;;){
     runval++;
       // Enable interrupts on this processor.
