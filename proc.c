@@ -337,13 +337,11 @@ return total;
 void
 scheduler(void)
 {
-  int runval = 0;
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
-  int number_tickets = 0;
-  int counter = 0;
-  int winner = 0;
+  int number_tickets, runval = 0;
+  int winner;
   for(;;){
     runval++;
       // Enable interrupts on this processor.
@@ -385,7 +383,6 @@ scheduler(void)
     release(&ptable.lock);
 
   }
-}
 
 // Enter scheduler.  Must hold only ptable.lock
 // and have changed proc->state. Saves and restores
