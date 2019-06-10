@@ -46,7 +46,7 @@ struct proc {
   struct context *context;     // swtch() here to run process
   void *chan;                  // If non-zero, sleeping on chan
   int killed;                  // If non-zero, have been killed
-  int tickets = 10;            // Numero de tickets en cada proceso
+  int tickets;            // Numero de tickets en cada proceso
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
