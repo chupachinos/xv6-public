@@ -319,8 +319,8 @@ wait(void)
 //  - choose a process to run
 //  - swtch to start running that process
 //  - eventually that process transfers control
-static long lcg_rand(unsigned long a){
-    unsigned long b = 279470273, c = 4294967291;
+static long lcg_rand(long a){
+    long b = 279470273, c = 4294967291;
     return (a*b)%c;
 }
 int n_tickets(void){
