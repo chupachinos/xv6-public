@@ -311,8 +311,9 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-
-long lcg_rand(unsigned long a){
+static
+unsigned long
+lcg_rand(unsigned long a){
     unsigned long b = 279470273, c = 4294967291;
     return (a * b) % c;
 }
