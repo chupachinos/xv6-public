@@ -319,11 +319,8 @@ wait(void)
 //  - choose a process to run
 //  - swtch to start running that process
 //  - eventually that process transfers control
-//      via swtch back to the scheduler.
-static
-unsigned long
-lcg_rand(unsigned long a){
-    unsigned long b = 279470273, c = 4294967291;
+long lcg_rand(unsigned long a){
+    long b = 279470273, c = 4294967291;
     return (a*b)%c;
 }
 int n_tickets(void){
