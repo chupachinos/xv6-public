@@ -6,7 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-#include "stdlib.h"
+#include<stdlib.h>
 
 struct {
   struct spinlock lock;
@@ -89,7 +89,6 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
-  p->tickets = 100;
 
   release(&ptable.lock);
 
@@ -321,29 +320,38 @@ wait(void)
 //  - swtch to start running that process
 //  - eventually that process transfers control
 //      via swtch back to the scheduler.
+int n_tickets(void){
+    struct proc *p;
+    int total=0;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+        {
+        if(p->state==RUNNABLE){
+        total = total + p->tickets;
+        }
+    }
+return total;
+}
 void
 scheduler(void)
 {
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
-  process* proccesses = tickets;
-  process* current = proccesses;
-  int number_tickets = 100;
+  int number_tickets = 0;
   int counter = 0;
-  srand(time(null));
   for(;;){
     // Enable interrupts on this processor.
     sti();
     acquire(&ptable.lock);
+    number_tickets = n_tickets(); // busca cuantos tickets hay en total
     int winner = rand()%(number_tickets);
-    while (current != NULL){
-        counter+=current->tickets;
+    while (p->state != NULL){
+        counter+=p->tickets;
         if (counter > winner){break;}
-        current = current -> next;
+        p->state = p->state -> next;
         
     }
-      
+    
     // Loop over process table looking for process to run.
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
