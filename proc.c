@@ -313,12 +313,11 @@ wait(void)
 }
 static
 unsigned long
-lcg_rand(unsigned long a){
-    unsigned long b=279470273;
-    unsigned long c=4294967291;
+lcg_rand(unsigned long a)
+{
+    unsigned long long b = 279470273, c = 4294967291;
     return (a * b) % c;
 }
-
 int n_tickets(void){
     struct proc *p;
     int total=0;
@@ -353,8 +352,9 @@ scheduler(void)
       
     // Loop over process table looking for process to run
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-        if(p->state != RUNNABLE){
+      if(p->state != RUNNABLE)
           winner-=p->tickets;
+        continue;
         if(p->state!= RUNNABLE || number_tickets >= 0){
         continue;
         }
