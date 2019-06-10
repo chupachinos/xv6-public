@@ -311,10 +311,8 @@ wait(void)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-static
-unsigned long
-lcg_rand(unsigned long a){
-    unsigned long b = 279470273, c = 4294967291;
+static unsigned long lcg_rand(unsigned long a){
+    unsigned long=279470273,c=4294967291;
     return (a * b) % c;
 }
 int n_tickets(void){
