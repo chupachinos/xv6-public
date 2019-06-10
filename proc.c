@@ -314,9 +314,11 @@ wait(void)
 static
 unsigned long
 lcg_rand(unsigned long a){
-    unsigned long b=279470273,c=4294967291;
+    unsigned long b=279470273;
+    unsigned long c=4294967291;
     return (a * b) % c;
 }
+
 int n_tickets(void){
     struct proc *p;
     int total=0;
@@ -332,6 +334,8 @@ void
 scheduler(void)
 {
   struct proc *p;
+  struct cpu *c = mycpu();
+  c->proc = 0;
   int number_tickets, runval = 0;
   int winner;
   for(;;){
@@ -351,7 +355,6 @@ scheduler(void)
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
         if(p->state != RUNNABLE){
           winner-=p->tickets;
-        }
         if(p->state!= RUNNABLE || number_tickets >= 0){
         continue;
         }
@@ -361,16 +364,16 @@ scheduler(void)
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
-      proc = p;
+      c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
 
-      swtch(&cpu->scheduler, p->context);
+      swtch(&(c->scheduler), p->context);
       switchkvm();
 
       // Process is done running for now.
       // It should have changed its p->state before coming back.
-      proc = 0;
+      c->proc = 0;
     }
     release(&ptable.lock);
 
