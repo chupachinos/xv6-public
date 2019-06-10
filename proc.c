@@ -312,7 +312,7 @@ wait(void)
   }
 }
 static unsigned long lcg_rand(unsigned long a){
-    unsigned long=279470273,c=4294967291;
+    unsigned long b=279470273,c=4294967291;
     return (a * b) % c;
 }
 int n_tickets(void){
