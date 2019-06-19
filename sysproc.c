@@ -115,9 +115,9 @@ sys_direcfi(char *vir)
     struct proc *process = myproc();
     argstr(0, &vir);
     char *PD;
-    pde_t *pagedir, *pagetab, *entry;
+    pde_t *pagedir,*pagetab,*entry;
     pagedir = process->pgdir;
-    
+    pte = &pagetab[PTX(vir)];
     entry = &pagedir[PDX(vir)];
     if(*entry & PTE_P)
     {
@@ -129,9 +129,7 @@ sys_direcfi(char *vir)
         return 1;
     }
     pte_t *pte;
-    pte = &pagetab[PTX(vir)];
-    PD = (char*)V2P(PTE_ADDR(*pte));
-    
+    PD = (char*)V2P(PTE_ADDR(*pte));    
     cprintf("La direccion fisica es: %d\n", PD);
     return 0;
 }
