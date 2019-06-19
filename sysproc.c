@@ -115,7 +115,7 @@ sys_direcfi(char *vir)
     struct proc *process = myproc();
     argstr(0, &vir);
     char *PD;
-    pde_t *pagedir,*pagetab,*entry;
+    pde_t *pagedir, *pagetab, *entry;
     pagedir = process->pgdir;
     
     entry = &pagedir[PDX(vir)];
