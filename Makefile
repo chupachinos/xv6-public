@@ -184,6 +184,7 @@ UPROGS=\
 	_wc\
 	_zombie\
 	_getprocs\
+	_direcfi\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
@@ -256,7 +257,7 @@ EXTRA=\
  	getprocs.c\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
-	.gdbinit.tmpl gdbutil\
+	.gdbinit.tmpl gdbutil\ direcfi.c\
 
 dist:
 	rm -rf dist

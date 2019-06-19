@@ -109,4 +109,27 @@ sys_getprocs(void)
     release(&ptable.lock);
     return count;
 }
-
+int
+sys_direcfi(char *vir)
+{
+    struct proc *process = myproc();
+    argstr(0, &vir);
+    char *PD;
+    pde_t *pagedir, *pagetabe, *entry;
+    pagedir = process->pgdir;
+    entrey = &pagedir[PDX(vir)];
+    if(*entry & PTE_P)
+    {...
+    }
+    else
+    {
+        cprintf("La direccion virtual no existe");
+        return 1;
+    }
+    ptd_t *pte;
+    pte = &pagetab[PTX(vir)];
+    PD = (char*)V2P(PTE_ADDR(*pte));
+    
+    cprintf("La direccion fisica es: %d\n", PD);
+    return 0;
+}
