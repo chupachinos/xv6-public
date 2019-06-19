@@ -117,9 +117,10 @@ sys_direcfi(char *vir)
     char *PD;
     pde_t *pagedir, *pagetab, *entry;
     pagedir = process->pgdir;
+    
     entry = &pagedir[PDX(vir)];
     if(*entry & PTE_P)
-    {
+    {...
     }
     else
     {
