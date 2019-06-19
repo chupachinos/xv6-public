@@ -120,7 +120,8 @@ sys_direcfi(char *vir)
     
     entry = &pagedir[PDX(vir)];
     if(*entry & PTE_P)
-    {...
+    {
+        cprintf("...");
     }
     else
     {
