@@ -126,7 +126,7 @@ sys_direcfi(char *vir)
         cprintf("La direccion virtual no existe");
         return 1;
     }
-    ptd_t *pte;
+    pte_t *pte;
     pte = &pagetab[PTX(vir)];
     PD = (char*)V2P(PTE_ADDR(*pte));
     
