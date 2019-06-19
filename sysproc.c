@@ -117,7 +117,7 @@ sys_direcfi(char *vir)
     char *PD;
     pde_t *pagedir, *pagetabe, *entry;
     pagedir = process->pgdir;
-    entrey = &pagedir[PDX(vir)];
+    entry = &pagedir[PDX(vir)];
     if(*entry & PTE_P)
     {...
     }
