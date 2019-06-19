@@ -117,7 +117,8 @@ sys_direcfi(char *vir)
     char *PD;
     pde_t *pagedir, *pagetab, *entry;
     pagedir = process->pgdir;
-    
+    pte_t *pte;
+    pte = &pagetab[PTX(vir)];
     entry = &pagedir[PDX(vir)];
     if(*entry & PTE_P)
     {
@@ -128,8 +129,7 @@ sys_direcfi(char *vir)
         cprintf("La direccion virtual no existe");
         return 1;
     }
-    pte_t *pte;
-    pte = &pagetab[PTX(vir)];
+    
     PD = (char*)V2P(PTE_ADDR(*pte));
     
     cprintf("La direccion fisica es: %d\n", PD);
